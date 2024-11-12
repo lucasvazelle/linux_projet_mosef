@@ -14,12 +14,17 @@ def load_netcdf_data(nc_file):
 def load_all_netcdf_files(directory):
     datasets = []
     filenames = []
-    for filename in os.listdir(directory):
-        if filename.endswith(".nc"):
-            file_path = os.path.join(directory, filename)
-            datasets.append(load_netcdf_data(file_path))
-            filenames.append(filename)
+    
+    # Utiliser os.walk() pour parcourir le dossier et ses sous-dossiers
+    for root, dirs, files in os.walk(directory):
+        for filename in files:
+            if filename.endswith(".nc"):  # Vérifier si le fichier est un fichier .nc
+                file_path = os.path.join(root, filename)  # Construire le chemin complet
+                datasets.append(load_netcdf_data(file_path))  # Charger le fichier NetCDF
+                filenames.append(file_path)  # Ajouter le chemin du fichier dans la liste
+                
     return datasets, filenames
+
 
 # Fonction pour extraire un titre pertinent basé sur le nom du fichier
 def extract_title(filename):
