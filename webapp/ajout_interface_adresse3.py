@@ -115,17 +115,7 @@ year = st.slider("Sélectionnez l'année", min_value=1979, max_value=2023, step=
 latitude = st.number_input("Entrez la latitude", value=50.0)
 longitude = st.number_input("Entrez la longitude", value=2.0)
 
-# Utilisation des onglets pour afficher chaque dataset dans une carte séparée
-tab_labels = [extract_title(filename) for filename in all_filenames]
-
-# Filtrer les onglets avec des labels vides
-tab_labels = [label for label in tab_labels if label]
-
-# Vérifier s'il y a au moins un onglet
-if tab_labels:
-    tabs = st.tabs(tab_labels)
-else:
-    st.error("Aucun fichier NetCDF valide trouvé pour afficher les onglets.")
+tabs = st.tabs([extract_title(filename) for filename in all_filenames])
 
 for i, (ds, filename) in enumerate(zip(all_datasets, all_filenames)):
     with tabs[i]:
