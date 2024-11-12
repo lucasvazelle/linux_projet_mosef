@@ -98,7 +98,7 @@ def get_value_and_risk(ds, latitude, longitude, year):
     return valeur, risk_level
 
 # Dossier contenant les fichiers NetCDF
-directory = "../data-collect/donnees_risk_climatique_telechargees/"
+directory = "donnees_risk_climatique_telechargees/"
 all_datasets, all_filenames = load_all_netcdf_files(directory)
 
 st.title("Cartes des indicateurs climatiques")
