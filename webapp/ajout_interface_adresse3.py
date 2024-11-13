@@ -22,6 +22,7 @@ def load_all_netcdf_files(directory):
     return datasets, filenames
 
 
+
 # Fonction pour extraire un titre pertinent basé sur le nom du fichier
 def extract_title(filename):
     start = filename.find("_") + 1
