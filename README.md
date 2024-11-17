@@ -1,11 +1,11 @@
 # linux_projet_mosef
-je vous prie de copier le code ci-dessous, dans le fichier $HOME/.cdsapirc 
-(dans votre environnement Unix/Linux):
 
-  url: https://cds.climate.copernicus.eu/api
-  key: 00bfa379-1ab5-41c1-98ef-4deaa3abfa26
+[commander à lancer] cf branch master pour l'évalusation Feat 1: Un commentaire précisant le retour attendu Feat 2: Un exemple de retour
+Cette application web permet d'afficher de manière graphique et intéractive des cartes européennes d'indicateur de risque climatique calculées par Copernicus sur plusieurs années. 
+Vous pouvez renseigner des coorodonnées géographique pour connaître le niveau de risque climatique associée à l'année et l'indicateur choisi.
+Par exemple, la première page affiche le nombre de jours froid "extrême".
 
-[commander à lancer]
-cf branch master pour l'évalusation
-Feat 1: Un commentaire précisant le retour attendu
-Feat 2: Un exemple de retour 
+Lancer:
+$pip3 install -r requirements.txt 
+$streamlit run webapp/webapp.py
+

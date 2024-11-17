@@ -1,6 +1,6 @@
 # Décompresser le fichier .zip téléchargé (quel que soit le nom)
 zip_file=$(ls *.zip 2>/dev/null)
-output_dir="./donnees_risk_climatique_telechargees"  # Dossier de destination local
+output_dir="../webapp"  # Dossier de destination local
 
 # Créer le dossier de destination si nécessaire
 mkdir -p "$output_dir"
