@@ -5,7 +5,13 @@ Cette application web permet d'afficher de manière graphique et intéractive de
 Vous pouvez renseigner des coorodonnées géographique pour connaître le niveau de risque climatique associée à l'année et l'indicateur choisi.
 Par exemple, la première page affiche le nombre de jours froid "extrême".
 
-Lancer:
+2 possibilitées
+
+1ère possibilité, lancer:
 $pip3 install -r requirements.txt 
 $streamlit run webapp/webapp.py
+
+2èeme possibilité, lancer (pré requis : avoir le logiciel docker) : 
+docker pull  lucasvazelle/mywebapp
+docker run -p 8501:8501 lucasvazelle/mywebapp
 
