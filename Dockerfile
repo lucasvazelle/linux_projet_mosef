@@ -12,4 +12,4 @@ RUN chmod +x *.sh
 
 RUN python3 -m pip install -r requirements.txt
 
-CMD ["bash", "-c", "cd /.devcontainer/ && bash start_app.sh"]
+CMD ["bash", "start_app.sh"]
