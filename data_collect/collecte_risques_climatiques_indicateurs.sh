@@ -16,8 +16,7 @@ request = {
         "frequency_of_extreme_precipitation",
         "duration_of_meteorological_droughts",
         "days_with_high_fire_danger",
-        "extreme_wind_speed_days",
-        "snowfall_amount"
+        "extreme_wind_speed_days"
     ],
     "origin": "projections",
     "gcm": ["ipsl_cm5a_mr"],
@@ -31,7 +30,7 @@ request = {
 client = cdsapi.Client()
 client.retrieve(dataset, request).download()
 
-EOFgit push origin main
+EOF
 
 
 # Décompresser le fichier .zip téléchargé 
