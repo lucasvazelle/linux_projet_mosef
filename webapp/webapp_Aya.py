@@ -227,9 +227,9 @@ def show_about_widget():
         with st.expander("ℹ️ About the application"):
             st.markdown("""
             ### 🌍 Global Vision
-            Our predictive climate risk analysis application is primarily aimed at insurance professionals. 
-            Anticipate climate risks to optimize your coverage strategies.
-
+                        
+            Our climate risk prediction application is designed specifically for insurance professionals,
+            enabling you to anticipate climate risks and refine your coverage strategies effectively.
     
             ### 📊 Indicators
             Les indicateurs analysés incluent :
