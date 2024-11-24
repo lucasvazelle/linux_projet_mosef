@@ -6,4 +6,6 @@ streamlit
 xarray
 pandas
 numpy
-
+geopy
+plotly
+datetime
