@@ -67,27 +67,19 @@ else:
 
 def load_data():
     """
-    Cherche et charge le fichier wind.csv à partir d'un emplacement inconnu.
+    Charge les données de `wind.csv` où qu'il soit dans le projet.
+    Returns:
+        pd.DataFrame: DataFrame des données chargées.
+    Raises:
+        FileNotFoundError: Si le fichier `wind.csv` n'est pas trouvé.
     """
-    # Nom du fichier à chercher
-    file_name = "wind.csv"
-
-    # Définir le chemin de recherche de base (par défaut : le répertoire courant)
-    search_path = "."
-
-    # Chercher le fichier avec os.walk
-    for root, dirs, files in os.walk(search_path):
-        if file_name in files:
-            data_path = os.path.join(root, file_name)
-            try:
-                # Charger le fichier CSV trouvé
-                df = pd.read_csv(data_path)
-                return df
-            except Exception as e:
-                raise FileNotFoundError(f"Erreur lors de l'ouverture du fichier {data_path}: {e}")
+    # Rechercher le fichier partout dans le projet
+    data_path = find_file("wind.csv")
+    if not data_path:
+        raise FileNotFoundError("Le fichier 'wind.csv' est introuvable. Veuillez vérifier son emplacement.")
     
-    # Si le fichier n'est pas trouvé, lever une erreur
-    raise FileNotFoundError(f"Le fichier '{file_name}' n'a pas été trouvé dans le répertoire '{search_path}' ou ses sous-répertoires.")
+    # Charger les données
+    df = pd.read_csv(data_path)
     
     # Mapper les valeurs de "risk" et convertir en float
     risk_mapping = {
@@ -97,6 +89,7 @@ def load_data():
     }
     df['risk'] = df['risk'].map(risk_mapping).fillna(0)
     df['risk'] = df['risk'].astype(float)
+    
     
     # Arrondir les valeurs de latitude et longitude
     df['lat'] = df['lat'].round(2)
