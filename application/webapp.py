@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # Définir le chemin de l'image
-image_path = Path("fond.jpeg")
+image_path = Path("application/green.jpg")
 
 # Vérifiez si le fichier existe
 if not image_path.is_file():
@@ -35,11 +35,30 @@ else:
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-    }}
-
-    /* Appliquer une couleur blanche pour tout le texte */
-    body, html, .main .block-container, .stApp {{
         color: white !important;
+        padding-top: 0;
+        background-color: #333333;
+    }}
+    
+    /* Appliquer une couleur blanche pour tout le texte */
+    .css-1c2pvh4 label, 
+    .css-1b6tptk label, 
+    .css-1n4l1t8 label, 
+    .stTextInput label, 
+    .stSelectbox label, 
+    .title-container, 
+    .info-section, 
+    .legend-title, 
+    .info-text {{
+        color: white !important;
+    }}
+    .highlight-coordinates {{
+        color: #ffa500;
+        font-weight: bold;
+    }}
+    .highlight-closest {{
+        color: #ff6347;
+        font-weight: bold;
     }}
     """
     st.markdown(page_bg_img, unsafe_allow_html=True)
@@ -49,7 +68,7 @@ else:
 @st.cache_data  # Cache les données pour de meilleures performances
 def load_data():
     # Charger les données
-    data_path = "../data_process/wind.csv"
+    data_path = "data_process/wind.csv"
     df = pd.read_csv(data_path)
     
     # Mapper les valeurs de "risk" et convertir en float
@@ -129,157 +148,21 @@ except Exception as e:
 # Créer deux colonnes : une pour la légende et une pour le contenu principal
 col_legend, col_main = st.columns([1, 3])  # Modifié pour plus d'espace à droite
 
-# Appliquer des styles CSS pour personnaliser les couleurs de fond des colonnes
-st.markdown("""
-    <style>
-    /* Style général */
-        .main .block-container {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-
-        /* Style pour les colonnes */
-    html, body {
-    background-color: white !important; /* Force le fond blanc */
-    margin: 0; /* Supprime les marges par défaut */
-    padding: 0; /* Supprime les paddings par défaut */
-    height: 100%;
-}
-
-        /* Style pour la colonne principale */
-        .css-1v3fvcr {
-            background-color: #FFFFFF;
-            padding: 20px;
-            margin-left: 22%; /* Ajusté pour tenir compte de la largeur de la colonne légende */
-        }
-        
-        /* Style pour les badges de risque */
-        .risk-badge {
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin: 12px 0;
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        .risk-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-        }
-
-        .risk-low {
-            background: linear-gradient(135deg, #28a745, #20c997);
-        }
-
-        .risk-medium {
-            background: linear-gradient(135deg, #ffc107, #fd7e14);
-            color: black;
-        }
-
-        .risk-high {
-            background: linear-gradient(135deg, #dc3545, #c82333);
-        }
-
-        /* Style pour les titres */
-        h1 {
-            color: #FFFFFF;
-            font-size: 2.2em;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid #FFFFFF;
-        }
-
-        h3 {
-            color: #FFFFFF;
-            font-size: 1.3em;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #E0E0E0;
-        }
-
-        /* Style pour les conteneurs de données */
-        .data-container {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-
-        .data-container:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        /* Style pour les cartes Folium */
-        .stFolium {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        /* Style pour les graphiques Plotly */
-        .js-plotly-plot {
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        /* Améliorations pour la légende */
-        .legend-title {
-            font-size: 1.4em;
-            color: white;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-        }
-
-        .info-section {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .info-text {
-            color: #FFFFFF;
-            font-size: 0.9em;
-            line-height: 1.6;
-            margin-bottom: 0.8rem;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
-def show_legend_and_info():
-    """Affiche la légende et les informations dans la colonne de gauche."""
-    st.markdown("""
-    <div class="info-section">
-    <h4 style='color: white; margin-bottom: 1rem;'>User Guide</h4>
-    <p class="info-text">🎯 Select a year, a city and the country to visualize the data</p>
-    <p class="info-text">🗺️ On the map:</p>
-    <ul class="info-text">
-    <li style='color: #FFFFFF;'>📍 City location</li>
-    <li style='color: #FFFFFF;'>🎨 Data (color according to risk level)</li>
-    </ul>
-    <p class="info-text">📊 The graph shows the evolution of risks over time</p>
-    </div>
-    """, unsafe_allow_html=True)
-
 # Utilisation de la fonction dans la colonne dédiée
 with col_legend:
-    show_legend_and_info()
-
-    # Afficher la palette de couleurs des risques
-    st.write("### Risk Level Legend")    
-        # Display risk badges
-    st.markdown('<div class="risk-badge risk-low">Low Risk (1)</div>', unsafe_allow_html=True)
-    st.markdown('<div class="risk-badge risk-medium">Medium Risk (2)</div>', unsafe_allow_html=True)
-    st.markdown('<div class="risk-badge risk-high">High Risk (3)</div>', unsafe_allow_html=True)
-    st.markdown("---")
+    # Afficher la légende et les informations
+    st.markdown("""
+    ### User Guide
+    🌍 Select a country and city, then choose a year to view the data  
+    🗺️ On the map, your selected city is marked with an orange point  
+    📊 The graph shows the evolution of climate risks over time
+    
+    ### Risk Legend
+    - <span style='color: #28a745;'>Low Risk (1) :</span> Minimal impact expected.
+    - <span style='color: #ffc107;'>Medium Risk (2) :</span> Moderate impact possible.
+    - <span style='color: #dc3545;'>High Risk (3) :</span> Significant impact likely.
+    """, unsafe_allow_html=True)
+    
     with st.expander("ℹ️ About the application"):
         st.markdown("""
         ### 🌍 Global Vision
@@ -297,109 +180,92 @@ with col_legend:
         - Updates: Regular
         - Source : [Climate Data Store](https://cds.climate.copernicus.eu/datasets)
         
-        ### 🛠️ Features
+        ### 🚧 Features
         - Search by city
         - Visualization on interactive map
         - Risk calculation
         - Temporal analysis
                     
         ### 👥 Contacts:
-        - Lucas Vazelle [💼](https://www.linkedin.com/in/lucas-vazelle)
-        - Mariam Tarverdian [💼](https://www.linkedin.com/in/mariam-tarverdian-9a6140200)
-        - Chahla Tarmoun [💼](https://www.linkedin.com/in/chahla-tarmoun-4b546a160)
-        - Aya Mokhtar [💼](https://www.linkedin.com/in/aya-mokhtar810b4b216)
+        - Lucas Vazelle [🎓](https://www.linkedin.com/in/lucas-vazelle)
+        - Mariam Tarverdian [🎓](https://www.linkedin.com/in/mariam-tarverdian-9a6140200)
+        - Chahla Tarmoun [🎓](https://www.linkedin.com/in/chahla-tarmoun-4b546a160)
+        - Aya Mokhtar [🎓](https://www.linkedin.com/in/aya-mokhtar810b4b216)
         """)
+
 # Dans la colonne principale, afficher le contenu de l'application
 with col_main:
     # En-tête
     st.markdown("""
         <div class="title-container">
             <h1 style='text-align: center;'>🌡️ Climate Indicators Analysis</h1>
-            <p style='text-align: center;'>Explore and analyze climate data from around the world. </p>
+            <p style='text-align: center;'>Explore and analyze climate data from around the world</p>
         </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("""
-        <style>
-            /* Style pour les labels */
-            .css-1c2pvh4 label, 
-            .css-1b6tptk label, 
-            .css-1n4l1t8 label, 
-            .stTextInput label, 
-            .stSelectbox label {
-                color: #FFFFFF !important; /* Texte en blanc */
-                font-size: 1rem; /* Taille de la police */
-            }
-
-        </style>
-    """, unsafe_allow_html=True)
-        
     # Sélecteur d'année
-    selected_year = st.selectbox("📅 Select the year please", sorted(wind_data['year'].unique()))
+    selected_year = st.selectbox("📅 Select a year", sorted(wind_data['year'].unique()))
     year_mask = (wind_data['year'] == selected_year)
     year_data = wind_data.loc[year_mask]
 
-    # Sélecteur de ville et de pays
-    city_name = st.text_input("🔍 Search for a city")
-    country_name = st.text_input("🔍 Search for a country")
+    # Sélecteur de pays et de ville (avec meilleure guidance)
+    country_name = st.text_input("🔍 Enter a country (e.g., France)")
+    city_name = st.text_input("🔍 Enter a city (e.g., Paris)")
 
-    if city_name and country_name:
+    if country_name and city_name:
         city_lat, city_lon = get_coordinates(city_name, country_name)
-        
-        st.write("### Coordinates found by Geopy:")
-        st.write(f"Latitude: {city_lat}")
-        st.write(f"Longitude: {city_lon}")
-        
+
         if city_lat and city_lon:
+            # Afficher les coordonnées trouvées par Geopy
+            st.markdown("### Coordinates of the Selected City:")
+            st.markdown(f"Latitude: <span class='highlight-coordinates'>{city_lat}</span><br>Longitude: <span class='highlight-coordinates'>{city_lon}</span>", unsafe_allow_html=True)
+            
             # Trouver les données les plus proches dans le dataframe
             nearest_idx = year_data[['lat', 'lon']].apply(lambda x: ((x['lat'] - city_lat)**2 + (x['lon'] - city_lon)**2)**0.5, axis=1).idxmin()
             nearest_data = year_data.loc[nearest_idx]
             
-            # Déterminer le niveau de risque
-            risk_level = nearest_data['risk']
-            risk_text = "Low" if risk_level == 1 else "Medium" if risk_level == 2 else "High" if risk_level == 3 else "Unknown"
-            risk_color = "risk-low" if risk_level == 1 else "risk-medium" if risk_level == 2 else "risk-high" if risk_level == 3 else ""
-
-            st.write("### Risk Level for selected city:")
-            st.markdown(f'<div class="risk-badge {risk_color}">{risk_text} Risk</div>', unsafe_allow_html=True)
-            st.write("### Closest data points in the DataFrame:")
-            st.write(f"Nearest Latitude: {nearest_data['lat']}")
-            st.write(f"Nearest Longitude: {nearest_data['lon']}")
+            # Afficher les points de données les plus proches
+            st.markdown("### Closest Data Points in the DataFrame:")
+            st.markdown(f"Nearest Latitude: <span class='highlight-closest'>{nearest_data['lat']}</span><br>Nearest Longitude: <span class='highlight-closest'>{nearest_data['lon']}</span>", unsafe_allow_html=True)
             
-            # Afficher toutes les lignes correspondant à ces coordonnées
-            matching_data = year_data[
-                (year_data['lat'] == nearest_data['lat']) & 
-                (year_data['lon'] == nearest_data['lon'])
-            ]
+            # Explication du niveau de risque
+            st.write("### Risk Level of the Region:")
+            st.markdown(f"""
+            📅 **Selected Year**: <span style='color: #ffa500; font-weight: bold;'>{selected_year}</span>
+            <br><br>
+            **This is the risk level for the selected region:** <span style='color: #ffcc00; font-weight: bold;'>{'Unknown' if nearest_data['risk'] == 0 else risk_text}</span>
+            <br><br>
+            **Number of wind days per year in the selected region**: <span style='color: #ffa500; font-weight: bold;'>{nearest_data['days']}</span>
+            """, unsafe_allow_html=True)
+            
+            # Afficher le graphique temporel
+            st.write("### Risk Evolution:")
+            time_series_fig = create_time_series(wind_data, nearest_data['lat'], nearest_data['lon'], 'risk')
+            if time_series_fig is not None:
+                st.plotly_chart(time_series_fig, use_container_width=True)
+                
+                # Ajouter la légende des niveaux de risque sous le graphique temporel
+                st.markdown("""
+                <div style="display: flex; justify-content: center; gap: 10px;">
+                    <div class="risk-badge risk-low" style="padding: 10px; border-radius: 5px; background: #28a745; color: white;">Low Risk (1)</div>
+                    <div class="risk-badge risk-medium" style="padding: 10px; border-radius: 5px; background: #ffc107; color: black;">Medium Risk (2)</div>
+                    <div class="risk-badge risk-high" style="padding: 10px; border-radius: 5px; background: #dc3545; color: white;">High Risk (3)</div>
+                </div>
+                """, unsafe_allow_html=True)
             
             # Créer la carte avec des marqueurs colorés selon le niveau de risque
-            m = folium.Map(location=[city_lat, city_lon], zoom_start=8)
+            m = folium.Map(location=[city_lat, city_lon], zoom_start=5)
             
             # Marker pour la ville recherchée
             folium.Marker(
                 location=[city_lat, city_lon],
-                popup=f"Ville: {city_name}, {country_name}",
-                icon=folium.Icon(color='blue')
+                popup=f"City: {city_name}, {country_name}",
+                icon=folium.Icon(color='orange')
             ).add_to(m)
             
-            # Marker pour le point de données le plus proche avec couleur selon le risque
-            marker_color = 'green' if risk_level == 1 else 'orange' if risk_level == 2 else 'red' if risk_level == 3 else 'gray'
-            folium.Marker(
-                location=[nearest_data['lat'], nearest_data['lon']],
-                popup=f"Latitude: {nearest_data['lat']:.2f}, Longitude: {nearest_data['lon']:.2f}<br>Risque: {risk_text}",
-                icon=folium.Icon(color=marker_color)
-            ).add_to(m)
-            
-            st.write(f"📅 Selected year: {selected_year}")
-            st.write(f"Number of wind days for {city_name}, {country_name} in {selected_year}: {nearest_data['days']}")
-            
-            # Afficher le graphique temporel
-            st.write("### Risk Evolution:")
-                # Afficher le graphique temporel avec toutes les données
-        time_series_fig = create_time_series(wind_data, nearest_data['lat'], nearest_data['lon'], 'risk')
-        if time_series_fig is not None:
-            st.plotly_chart(time_series_fig, use_container_width=True)
-            
+            # Afficher la carte Folium
             st_folium(m, width=725)
         else:
             st.error("Sorry, coordinates for this city could not be found.")
+    else:
+        st.warning("Please enter both a country and a city.")
