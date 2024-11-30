@@ -32,5 +32,5 @@ streamlit run application/webapp.py
 Vous pouvez également déployer l'application via Docker. Assurez-vous d'avoir installé Docker au préalable.
 ```
 docker pull NOM
-docker run -p PORT:PORT NOM 
+docker run -p 5004:5004 NOM 
 ```
