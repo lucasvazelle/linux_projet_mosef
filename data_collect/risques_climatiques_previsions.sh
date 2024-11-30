@@ -47,4 +47,3 @@ if [ -n "$zip_file" ]; then
 else
     echo "Aucun fichier .zip trouvé pour la décompression."
 fi
-

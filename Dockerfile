@@ -6,7 +6,6 @@ WORKDIR /home/webapp/webapp_climatique
 COPY . .
 RUN chmod +x *.sh
 RUN python3 -m pip install -r requirements.txt
-RUN python3 -m pip install -r requirements.txt
 CMD ["bash", "start_app.sh"]
 
 
