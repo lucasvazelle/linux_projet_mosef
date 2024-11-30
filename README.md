@@ -1,17 +1,34 @@
 # linux_projet_mosef
 
-[commander à lancer] cf branch master pour l'évalusation Feat 1: Un commentaire précisant le retour attendu Feat 2: Un exemple de retour
-Cette application web permet d'afficher de manière graphique et intéractive des cartes européennes d'indicateur de risque climatique calculées par Copernicus sur plusieurs années. 
-Vous pouvez renseigner des coorodonnées géographique pour connaître le niveau de risque climatique associée à l'année et l'indicateur choisi.
-Par exemple, la première page affiche le nombre de jours froid "extrême".
+# Visualisation des indicateurs de risque climatique 🌍  
 
-2 possibilitées
+## Introduction  
+Ce projet a été développé dans le cadre d'une évaluation pour le Master MoSEF en Data Science de Paris 1 Panthéon-Sorbonne. Il consiste à créer une application web interactive permettant d'appréhender certains risques climatiques en Europe pour les prochaines années, en utilisant des indicateurs calculées par **Copernicus**.  
 
-1ère possibilité, lancer:
-$pip3 install -r requirements.txt 
-$streamlit run webapp/webapp.py
+Avec cette application, les utilisateurs peuvent entrer des coordonnées géographiques pour afficher le niveau de risque climatique associé à une année et à un indicateur spécifique. 
+Il est aussi affiché un graphique de l'évolution de la prévision du risque selon les années pour la localisation donnée, ainsi que d'une carte de permettant de visualiser l'adresse saisie. 
 
-2èeme possibilité, lancer (pré requis : avoir le logiciel docker) : 
-docker pull  lucasvazelle/mywebapp
-docker run -p 8501:8501 lucasvazelle/mywebapp
+## Fonctionnalités  
+- Recherche de risques climatiques à l'aide d'une adresse.  
+- Possibilité de sélectionner deux indicateurs de risque climatique. 
+- Visualisation interactive.  
 
+
+## Installation  
+
+Tout d'abord, clonez le dépôt et activez votre environnement virtuel. Ensuite, installez les dépendances nécessaires avec :  
+
+pip install -r requirements.txt
+
+
+### 1. Lancer l'application en local 💻  
+Vous pouvez exécuter l'application localement en utilisant les commandes suivantes :  
+
+```bash
+streamlit run application/webapp.py
+
+
+### 2. Lancer avec Docker 🐳
+Vous pouvez également déployer l'application via Docker. Assurez-vous d'avoir installé Docker au préalable.
+docker pull NOM
+docker run -p PORT:PORT NOM 

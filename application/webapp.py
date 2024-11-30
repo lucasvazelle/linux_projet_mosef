@@ -235,7 +235,7 @@ with col_main:
             <br><br>
             **This is the risk level for the selected region:** <span style='color: #ffcc00; font-weight: bold;'>{'Unknown' if nearest_data['risk'] == 0 else risk_text}</span>
             <br><br>
-            **Number of wind days per year in the selected region**: <span style='color: #ffa500; font-weight: bold;'>{nearest_data['days']}</span>
+            **Number of extreme wind days per year in the selected region**: <span style='color: #ffa500; font-weight: bold;'>{nearest_data['days']}</span>
             """, unsafe_allow_html=True)
             
             # Afficher le graphique temporel
