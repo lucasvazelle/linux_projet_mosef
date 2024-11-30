@@ -8,67 +8,75 @@ import plotly.express as px
 import numpy as np
 from pathlib import Path
 import base64
-
+import os 
 # Configuration de la page
 st.set_page_config(
     page_title="Climate Indicator",
     page_icon="🌍",
     layout="wide"
 )
+def find_file(filename, search_path="."):
+    """
+    Recherche un fichier dans un répertoire et ses sous-répertoires.
+    Args:
+        filename (str): Nom du fichier à rechercher.
+        search_path (str): Chemin de départ pour la recherche.
+    Returns:
+        str: Chemin complet du fichier si trouvé, sinon None.
+    """
+    for root, dirs, files in os.walk(search_path):
+        if filename in files:
+            return os.path.join(root, filename)
+    return None
 
-# Définir le chemin de l'image
-image_path = Path("../application/green.jpg")
+# Chercher le fichier image
+image_path = find_file("green.jpg")
 
 # Vérifiez si le fichier existe
-if not image_path.is_file():
-    st.error("L'image de fond n'a pas été trouvée. Vérifiez le chemin.")
+if not image_path:
+    st.error("L'image de fond n'a pas été trouvée. Vérifiez son emplacement.")
 else:
     # Lire et encoder l'image en base64
-    with open(image_path, "rb") as image_file:
-        encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
+    try:
+        with open(image_path, "rb") as image_file:
+            encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
 
-# CSS pour définir l'image de fond
-    page_bg_img = f"""
-    <style>
-    .stApp {{
-        background-image: url("data:image/jpeg;base64,{encoded_image}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: white !important;
-        padding-top: 0;
-        background-color: #333333;
-    }}
-    
-    /* Appliquer une couleur blanche pour tout le texte */
-    .css-1c2pvh4 label, 
-    .css-1b6tptk label, 
-    .css-1n4l1t8 label, 
-    .stTextInput label, 
-    .stSelectbox label, 
-    .title-container, 
-    .info-section, 
-    .legend-title, 
-    .info-text {{
-        color: white !important;
-    }}
-    .highlight-coordinates {{
-        color: #ffa500;
-        font-weight: bold;
-    }}
-    .highlight-closest {{
-        color: #ff6347;
-        font-weight: bold;
-    }}
-    """
-    st.markdown(page_bg_img, unsafe_allow_html=True)
+        # CSS pour définir l'image de fond
+        page_bg_img = f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpeg;base64,{encoded_image}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
 
-
+        /* Appliquer une couleur blanche pour tout le texte */
+        body, html, .main .block-container, .stApp {{
+            color: white !important;
+        }}
+        </style>
+        """
+        st.markdown(page_bg_img, unsafe_allow_html=True)
+    except Exception as e:
+        st.error(f"Erreur lors de la lecture de l'image: {e}")
 # Fonction pour charger et préparer les données
 @st.cache_data  # Cache les données pour de meilleures performances
+
 def load_data():
+    """
+    Charge les données de `wind.csv` où qu'il soit dans le projet.
+    Returns:
+        pd.DataFrame: DataFrame des données chargées.
+    Raises:
+        FileNotFoundError: Si le fichier `wind.csv` n'est pas trouvé.
+    """
+    # Rechercher le fichier partout dans le projet
+    data_path = find_file("wind.csv")
+    if not data_path:
+        raise FileNotFoundError("Le fichier 'wind.csv' est introuvable. Veuillez vérifier son emplacement.")
+    
     # Charger les données
-    data_path = "../data_process/wind.csv"
     df = pd.read_csv(data_path)
     
     # Mapper les valeurs de "risk" et convertir en float
@@ -79,6 +87,7 @@ def load_data():
     }
     df['risk'] = df['risk'].map(risk_mapping).fillna(0)
     df['risk'] = df['risk'].astype(float)
+    
     
     # Arrondir les valeurs de latitude et longitude
     df['lat'] = df['lat'].round(2)
