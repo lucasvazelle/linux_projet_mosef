@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # Définir le chemin de l'image
-image_path = Path("application/green.jpg")
+image_path = Path("../application/green.jpg")
 
 # Vérifiez si le fichier existe
 if not image_path.is_file():
@@ -68,7 +68,7 @@ else:
 @st.cache_data  # Cache les données pour de meilleures performances
 def load_data():
     # Charger les données
-    data_path = "data_process/wind.csv"
+    data_path = "../data_process/wind.csv"
     df = pd.read_csv(data_path)
     
     # Mapper les valeurs de "risk" et convertir en float
@@ -86,9 +86,8 @@ def load_data():
     
     return df
 
-# Définir la fonction de création de graphique temporel
 def create_time_series(data, lat, lon, variable_name):
-    """Crée un graphique temporel des données pour une localisation donnée"""
+    """Crée un graphique temporel des données pour une localisation donnée avec fond noir"""
     try:
         # Filtrer les données pour la localisation spécifique
         location_data = data[
@@ -108,15 +107,23 @@ def create_time_series(data, lat, lon, variable_name):
             }
         )
 
-        # Personnaliser le layout
+        # Personnaliser le layout pour fond noir et style général
         fig.update_layout(
-            template="plotly_white",
+            template="plotly_dark",  # Template avec fond noir
             hovermode='x unified',
             yaxis=dict(
                 tickmode='array',
                 ticktext=['Low', 'Medium', 'High'],
-                tickvals=[1, 2, 3]
+                tickvals=[1, 2, 3],
+                gridcolor='gray'  # Couleur des lignes de la grille pour lisibilité
             ),
+            xaxis=dict(
+                gridcolor='gray'  # Couleur des lignes de la grille pour l'axe X
+            ),
+            title_font=dict(color='white'),  # Couleur du titre
+            font=dict(color='white'),  # Couleur générale des textes
+            paper_bgcolor='black',  # Fond extérieur
+            plot_bgcolor='black',   # Fond du graphique
             showlegend=False
         )
 
@@ -229,7 +236,18 @@ with col_main:
             st.markdown(f"Nearest Latitude: <span class='highlight-closest'>{nearest_data['lat']}</span><br>Nearest Longitude: <span class='highlight-closest'>{nearest_data['lon']}</span>", unsafe_allow_html=True)
             
             # Explication du niveau de risque
+            # Fonction pour convertir le niveau de risque numérique en texte
+            def get_risk_text(risk_value):
+                if risk_value == 1:
+                    return "Low"
+                elif risk_value == 2:
+                    return "Medium" 
+                elif risk_value == 3:
+                    return "High"
+                else:
+                    return "Unknown"
             st.write("### Risk Level of the Region:")
+            risk_text = get_risk_text(nearest_data['risk'])
             st.markdown(f"""
             📅 **Selected Year**: <span style='color: #ffa500; font-weight: bold;'>{selected_year}</span>
             <br><br>
