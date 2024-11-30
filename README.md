@@ -26,9 +26,11 @@ Vous pouvez exécuter l'application localement en utilisant les commandes suivan
 
 ```bash
 streamlit run application/webapp.py
-
+'''
 
 ### 2. Lancer avec Docker 🐳
 Vous pouvez également déployer l'application via Docker. Assurez-vous d'avoir installé Docker au préalable.
+```bash
 docker pull NOM
 docker run -p PORT:PORT NOM 
+```
