@@ -11,10 +11,7 @@ import cdsapi
 dataset = "sis-ecde-climate-indicators"
 request = {
     "variable": [
-        "heatwave_days",
-        "frost_days",
         "frequency_of_extreme_precipitation",
-        "duration_of_meteorological_droughts",
         "extreme_wind_speed_days"
     ],
     "origin": "projections",
