@@ -25,12 +25,13 @@ pip install -r requirements.txt
 Vous pouvez exécuter l'application localement en utilisant les commandes suivantes :  
 
 ```
-streamlit run application/webapp.py
+bash start_app.sh
+
 ```
 
 ### 2. Lancer avec Docker 🐳
 Vous pouvez également déployer l'application via Docker. Assurez-vous d'avoir installé Docker au préalable.
 ```
-docker pull NOM
-docker run -p 5004:5004 NOM 
+docker pull lucasvazelle/webapp_climatique_groupe_quatre_mosef
+docker run -p 5004:5004 lucasvazelle/webapp_climatique_groupe_quatre_mosef
 ```
