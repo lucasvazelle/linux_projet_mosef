@@ -14,14 +14,11 @@ Il est aussi affiché un graphique de l'évolution de la prévision du risque se
 - Visualisation interactive.  
 
 
-## Installation  
+ 
+### 1. Lancer l'application en local 💻
 
-Tout d'abord, clonez le dépôt et activez votre environnement virtuel. Ensuite, installez les dépendances nécessaires avec :  
-
-pip install -r requirements.txt
-
-
-### 1. Lancer l'application en local 💻  
+Tout d'abord, clonez le dépôt et activez votre environnement virtuel. 
+ 
 Vous pouvez exécuter l'application localement en utilisant les commandes suivantes :  
 
 ```
@@ -35,3 +32,4 @@ Vous pouvez également déployer l'application via Docker. Assurez-vous d'avoir 
 docker pull lucasvazelle/webapp_climatique_groupe_quatre_mosef
 docker run -p 5004:5004 lucasvazelle/webapp_climatique_groupe_quatre_mosef
 ```
+Cliquez sur Local, Internal ou External URL selon votre contexte d'excécution
