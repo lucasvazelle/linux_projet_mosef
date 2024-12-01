@@ -49,7 +49,7 @@ wind_df['risk'] = wind_df['days'].apply(lambda x: assign_risk(x, percentiles_win
 print("✅ Risque assigné au dataset wind.")
 
 # Sauvegarde du dataset wind en CSV
-wind_df.to_csv("wind.csv", index=False)
+wind_df.to_csv("../application/wind.csv", index=False)
 print("💾 Dataset wind sauvegardé sous 'wind.csv'.")
 
 # Traitement du dataset precipitation
@@ -67,7 +67,7 @@ precipitation_df['risk'] = precipitation_df['days'].apply(lambda x: assign_risk(
 print("✅ Risque assigné au dataset precipitation.")
 
 # Sauvegarde du dataset precipitation en CSV
-precipitation_df.to_csv("precipitation.csv", index=False)
+precipitation_df.to_csv("../application/precipitation.csv", index=False)
 print("💾 Dataset precipitation sauvegardé sous 'precipitation.csv'.")
 
 print("🎉 Script terminé avec succès.")

@@ -17,6 +17,8 @@ st.set_page_config(
     layout="wide"
 )
 
+
+
 def find_file(filename, search_path="."):
     """
     Recherche un fichier dans un répertoire et ses sous-répertoires.
@@ -238,8 +240,22 @@ with col_main:
             <h1 style='text-align: center;'>🌡️ Climate Indicators Analysis</h1>
             <p style='text-align: center;'>Explore and analyze climate data from around the world</p>
         </div>
-    """, unsafe_allow_html=True)    
-    
+	<style>
+       """, unsafe_allow_html=True)    
+    st.markdown("""
+        <style>
+            /* Style pour les labels */
+            .css-1c2pvh4 label, 
+            .css-1b6tptk label, 
+            .css-1n4l1t8 label, 
+            .stTextInput label, 
+            .stSelectbox label {
+                color: #FFFFFF !important; /* Texte en blanc */
+                font-size: 1rem; /* Taille de la police */
+            }
+
+        </style>
+    """, unsafe_allow_html=True)
     # Sélecteur d'année, pays et ville
     selected_year = st.selectbox("📅 Select a year", sorted(wind_data['year'].unique()))
     country_name = st.text_input("🔍 Enter a country (e.g., France)")
@@ -262,7 +278,7 @@ with col_main:
 
             
             # Afficher les points de données les plus proches
-            st.markdown("###Closest coordinates in our database")
+            st.markdown("### Closest coordinates in our database")
             st.markdown(f"Nearest Latitude: <span class='highlight-closest'>{nearest_wind_data['lat']}</span><br>Nearest Longitude: <span class='highlight-closest'>{nearest_wind_data['lon']}</span>", unsafe_allow_html=True)
            
             
