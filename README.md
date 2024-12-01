@@ -26,7 +26,7 @@ bash start_app.sh
 
 ```
 
-### 2. Lancer avec Docker 🐳
+### 2. Lancer avec Docker (recommandé) 🐳
 Vous pouvez également déployer l'application via Docker. Assurez-vous d'avoir installé Docker au préalable.
 ```
 docker pull lucasvazelle/webapp_climatique_groupe_quatre_mosef
